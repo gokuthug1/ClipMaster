@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClipMaster - Floating Clipboard Manager for Chrome</title>
-    <meta name="description" content="ClipMaster is a beautifully remastered, floating clipboard window for Google Chrome with seamless Google Drive Cloud Sync.">
+    <meta name="description" content="ClipMaster is a beautifully remastered, floating clipboard window for Google Chrome.">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -64,17 +64,6 @@
         .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
         .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* Transparency Notice */
-        .transparency { background: white; border: 1px solid var(--primary); border-radius: 24px; padding: 48px; margin: 40px 0; position: relative; overflow: hidden; box-shadow: var(--shadow-md); }
-        .transparency::before { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--primary); }
-        .t-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
-        .t-header svg { width: 36px; height: 36px; color: var(--primary); }
-        .transparency h2 { font-size: 1.8rem; font-weight: 700; color: #0f172a; }
-        .transparency p { color: #334155; margin-bottom: 16px; font-size: 1.05rem; }
-        .transparency ul { margin-left: 24px; color: #475569; margin-bottom: 24px; }
-        .transparency li { margin-bottom: 8px; }
-        .transparency code { background: var(--primary-light); color: var(--primary-dark); padding: 2px 8px; border-radius: 6px; font-family: monospace; font-size: 0.9em; border: 1px solid #bfdbfe; }
-
         /* Footer */
         footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px; text-align: center; color: var(--text-muted); }
         footer .links { margin-top: 16px; display: flex; justify-content: center; gap: 24px; }
@@ -108,7 +97,7 @@
                 Version 8.0 Available Now
             </div>
             <h1>The ultimate <span>clipboard manager</span> for your browser.</h1>
-            <p>A beautifully remastered, floating clipboard window. Save, search, pin, and securely sync your copied text and images across all your devices.</p>
+            <p>A beautifully remastered, floating clipboard window. Save, search, pin, and easily manage your copied text and images right from your active tab.</p>
             <!-- UPDATE THIS LINK -->
             <a href="https://chrome.google.com/webstore/detail/gopagdmpgfbgklmckanjgpdcdkemipkl" class="btn-primary" target="_blank" style="padding: 16px 36px; font-size: 1.1rem;">Download Free Extension</a>
         </section>
@@ -124,10 +113,10 @@
             </div>
             <div class="feature-card">
                 <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 </div>
-                <h3>Secure Cloud Sync</h3>
-                <p>Never lose a snippet. Log in with your Google account to securely push and pull your clipboard history to your private Google Drive.</p>
+                <h3>Local Backup</h3>
+                <p>Keep your data safe and entirely offline. Easily export your entire clipboard history to a JSON file and import it back whenever you need.</p>
             </div>
             <div class="feature-card">
                 <div class="icon-wrapper">
@@ -143,25 +132,6 @@
                 <h3>Dark Mode Ready</h3>
                 <p>Switch between light and dark themes instantly. Customize the floater's dimensions right from the settings menu to fit your workflow.</p>
             </div>
-        </section>
-
-        <!-- OAuth / Privacy Transparency Notice -->
-        <section class="transparency">
-            <div class="t-header">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <h2>Data & Privacy: How Sync Works</h2>
-            </div>
-            <p>ClipMaster includes an optional synchronization feature that allows you to access your clipboard history across multiple devices. To facilitate this securely, the app requests access to your personal Google Drive.</p>
-            
-            <p><strong>Exactly what we request and why:</strong></p>
-            <ul>
-                <li><strong>Scope Requested:</strong> <code>https://www.googleapis.com/auth/drive.appdata</code></li>
-                <li><strong>Purpose:</strong> This permission only grants ClipMaster access to a special, hidden "App Data" folder inside your Google Drive.</li>
-                <li><strong>What is stored:</strong> The app manages a single configuration file (<code>clipmaster_sync.json</code>) containing your copied text, image URLs, and pin states.</li>
-            </ul>
-
-            <p><strong>Our commitment to your privacy:</strong></p>
-            <p>ClipMaster <strong>cannot</strong> see, read, modify, or delete your personal files, photos, or documents stored in Google Drive. Your clipboard data travels securely between your local browser and your private Google Drive. <strong>We do not have servers, and your data is never sent to us or any third parties.</strong></p>
         </section>
 
         <!-- Footer -->
