@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipMaster - Floating Clipboard Manager for Chrome</title>
+    <meta name="description" content="ClipMaster is a beautifully remastered, floating clipboard window for Google Chrome with seamless Google Drive Cloud Sync.">
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg-light: #f9fafb;
+            --text-dark: #111827;
+            --text-muted: #6b7280;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Google Transparency Section - CRUCIAL FOR OAUTH VERIFICATION */
+        .transparency-section {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .transparency-section h2 {
+            color: #1e3a8a;
+            margin-bottom: 16px;
+            font-size: 1.8rem;
+        }
+
+        .transparency-section p {
+            color: #1e40af;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .transparency-section ul {
+            margin-left: 20px;
+            color: #1e40af;
+            margin-bottom: 16px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        footer .links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .transparency-section { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                ClipMaster
+            </div>
+            <a href="https://chrome.google.com/webstore/detail/YOUR_EXTENSION_ID" class="btn" target="_blank">Add to Chrome</a>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Your Ultimate Floating Clipboard Manager</h1>
+            <p>A beautifully remastered, floating clipboard window for your browser. Save, search, pin, and sync your copied text and images seamlessly across all your devices.</p>
+            <a href="https://chrome.google.com/webstore/detail/YOUR_EXTENSION_ID" class="btn" target="_blank" style="font-size: 1.1rem; padding: 14px 32px;">Download Free Extension</a>
+        </section>
+
+        <!-- Features Overview -->
+        <section class="features" id="features">
+            <div class="feature-card">
+                <h3>🪟 Floating & Unintrusive UI</h3>
+                <p>Access your clipboard history anywhere on any tab. The interface is completely draggable, resizable, and can be minimized to stay out of your way until you need it.</p>
+            </div>
+            <div class="feature-card">
+                <h3>☁️ Cloud Sync via Google Drive</h3>
+                <p>Never lose a snippet again. Log in with your Google account to securely push and pull your clipboard history between different computers.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📝 Text & Image Support</h3>
+                <p>Save text snippets or image URLs directly using the right-click context menu. Pin your most important items so they are always at the top of your list.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🌙 Dark Mode & Customization</h3>
+                <p>Switch between light and dark themes instantly. Customize the floater's width and max-height directly from the settings menu to fit your workflow.</p>
+            </div>
+        </section>
+
+        <!-- Data Transparency Section (Crucial for Google OAuth Verification) -->
+        <section class="transparency-section" id="privacy-data">
+            <h2>Data & Privacy: How ClipMaster Uses Google Drive</h2>
+            <p>We believe in total transparency regarding your data. ClipMaster includes a synchronization feature that allows you to access your clipboard history across multiple devices. To facilitate this, the app requests access to your Google Drive.</p>
+            
+            <p><strong>Exactly what we request and why:</strong></p>
+            <ul>
+                <li><strong>Scope Requested:</strong> <code>https://www.googleapis.com/auth/drive.appdata</code></li>
+                <li><strong>Purpose:</strong> This permission only grants ClipMaster access to a special, hidden "App Data" folder inside your Google Drive. </li>
+                <li><strong>What is stored:</strong> The app creates and manages a single configuration file (<code>clipmaster_sync.json</code>) containing your copied text, image URLs, and pin states.</li>
+            </ul>
+
+            <p><strong>Our commitment to your privacy:</strong></p>
+            <p>ClipMaster <strong>cannot</strong> see, read, modify, or delete your personal files, photos, or documents stored in Google Drive. Your clipboard data travels securely between your local browser and your private Google Drive. <strong>We do not have servers, and your data is never sent to us or any third parties.</strong></p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 ClipMaster. All rights reserved.</p>
+            <div class="links">
+                <!-- IMPORTANT: Must link to a valid privacy policy page hosted on your domain -->
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="mailto:your-email@example.com">Contact Support</a>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
