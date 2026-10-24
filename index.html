@@ -3,76 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClipMaster - Floating Clipboard Manager for Chrome</title>
-    <meta name="description" content="ClipMaster is a beautifully remastered, floating clipboard window for Google Chrome.">
+    <title>ClipMaster - Ultimate Floating Clipboard Manager for Chrome</title>
+    <meta name="description" content="ClipMaster is a beautifully remastered, floating clipboard manager for Google Chrome with syntax highlighting, code beautification, and offline image storage.">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
         :root {
             --primary: #3b82f6;
             --primary-dark: #1d4ed8;
             --primary-light: #eff6ff;
+            --accent: #8b5cf6;
             --bg-color: #f8fafc;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --card-bg: #ffffff;
             --border: #e2e8f0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 30px -5px rgba(0,0,0,0.05);
-            --shadow-lg: 0 20px 40px -10px rgba(59, 130, 246, 0.15);
+            --shadow-md: 0 12px 32px -4px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 24px 48px -12px rgba(59, 130, 246, 0.2);
+            --code-bg: #0f172a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
         a { text-decoration: none; color: inherit; }
 
-        /* Background Glow */
+        /* Ambient Glow */
         .bg-glow {
-            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 500px; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(255,255,255,0) 70%);
+            position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+            width: 1000px; height: 600px; 
+            background: radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(139,92,246,0.1) 40%, rgba(255,255,255,0) 70%);
             z-index: -1; pointer-events: none;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
         /* Navbar */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; }
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
-        .brand-icon { width: 32px; height: 32px; color: var(--primary); background: var(--primary-light); padding: 6px; border-radius: 10px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+        .brand { display: flex; align-items: center; gap: 12px; font-size: 1.45rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .brand-icon { width: 34px; height: 34px; color: var(--primary); background: var(--primary-light); padding: 7px; border-radius: 10px; }
         
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-link { font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+        .nav-link:hover { color: var(--primary); }
+
         .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white; padding: 12px 28px; border-radius: 12px; font-weight: 600;
-            box-shadow: var(--shadow-sm); transition: all 0.2s ease;
+            color: white; padding: 12px 26px; border-radius: 14px; font-weight: 600; font-size: 0.95rem;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35); transition: all 0.25s ease;
         }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); color: white; }
+        .btn-primary svg { width: 18px; height: 18px; }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: white; color: var(--text-main);
+            padding: 12px 24px; border-radius: 14px; font-weight: 600; font-size: 0.95rem;
+            border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: all 0.25s ease;
+        }
+        .btn-secondary:hover { transform: translateY(-2px); border-color: #cbd5e1; box-shadow: var(--shadow-md); }
 
         /* Hero */
-        .hero { text-align: center; padding: 100px 0 80px; }
-        .badge { display: inline-flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border); padding: 6px 16px; border-radius: 30px; font-size: 0.9rem; font-weight: 500; color: var(--primary); margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 24px; line-height: 1.1; color: #020617; }
-        .hero h1 span { background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+        .hero { text-align: center; padding: 70px 0 60px; }
+        .badge { 
+            display: inline-flex; align-items: center; gap: 8px; 
+            background: white; border: 1px solid var(--border); 
+            padding: 7px 18px; border-radius: 30px; font-size: 0.88rem; font-weight: 600; 
+            color: var(--primary); margin-bottom: 24px; box-shadow: var(--shadow-sm); 
+        }
+        .badge .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block; }
+        .hero h1 { 
+            font-size: 3.6rem; font-weight: 800; letter-spacing: -1.8px; margin-bottom: 20px; 
+            line-height: 1.12; color: #020617; max-width: 860px; margin-left: auto; margin-right: auto;
+        }
+        .hero h1 span { 
+            background: linear-gradient(135deg, var(--primary), var(--accent)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .hero p { 
+            font-size: 1.25rem; color: var(--text-muted); max-width: 680px; 
+            margin: 0 auto 36px; line-height: 1.65; 
+        }
+        .hero-ctas { display: flex; justify-content: center; gap: 16px; margin-bottom: 50px; flex-wrap: wrap; }
+
+        /* Interactive Floater Preview Mockup */
+        .preview-wrapper {
+            position: relative; max-width: 760px; margin: 0 auto 80px;
+            background: white; border: 1px solid var(--border); border-radius: 24px;
+            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.15); padding: 24px;
+        }
+        .mock-floater {
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 18px; overflow: hidden;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.08); text-align: left;
+        }
+        .mock-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 18px; border-bottom: 1px solid rgba(0,0,0,0.06); background: white;
+        }
+        .mock-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+        .mock-actions { display: flex; gap: 8px; }
+        .mock-btn { width: 26px; height: 26px; border-radius: 6px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b; }
+
+        .mock-search {
+            padding: 10px 16px; border-bottom: 1px solid rgba(0,0,0,0.06); background: #f8fafc;
+            display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-muted);
+        }
+        .mock-list { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .mock-item {
+            padding: 12px 14px; background: white; border: 1px solid var(--border);
+            border-radius: 12px; display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.9rem; transition: transform 0.2s;
+        }
+        .mock-item.pinned { border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.04); }
+        .mock-item-text { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #1e293b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 440px; }
+        .mock-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .mock-tag { font-size: 0.75rem; font-weight: 700; background: #eff6ff; color: var(--primary); padding: 3px 8px; border-radius: 8px; }
 
         /* Features */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 40px 0 80px; }
+        .features-header { text-align: center; margin-bottom: 48px; }
+        .features-header h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+        .features-header p { font-size: 1.15rem; color: var(--text-muted); }
+
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 80px; }
         .feature-card { background: var(--card-bg); padding: 32px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
-        .icon-wrapper { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--primary-light); color: var(--primary); border-radius: 14px; margin-bottom: 20px; }
-        .icon-wrapper svg { width: 24px; height: 24px; }
-        .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
-        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+        .icon-wrapper { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--primary-light); color: var(--primary); border-radius: 14px; margin-bottom: 20px; }
+        .icon-wrapper svg { width: 26px; height: 26px; }
+        .feature-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .feature-card p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.6; }
+
+        /* Shortcut Banner */
+        .shortcut-banner {
+            background: linear-gradient(135deg, #0f172a, #1e293b); color: white;
+            padding: 48px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 80px; box-shadow: var(--shadow-md); flex-wrap: wrap; gap: 24px;
+        }
+        .shortcut-banner h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+        .shortcut-banner p { color: #94a3b8; font-size: 1.05rem; }
+        .shortcut-key-wrapper { display: flex; align-items: center; gap: 8px; }
+        .key-badge {
+            background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 18px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 80px; text-align: center; color: var(--text-muted); }
-        footer .links { margin-top: 16px; display: flex; justify-content: center; gap: 24px; }
+        footer { border-top: 1px solid var(--border); padding: 48px 0; margin-top: 40px; text-align: center; color: var(--text-muted); }
+        footer .links { margin-top: 16px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
         footer .links a { font-weight: 500; transition: color 0.2s; }
         footer .links a:hover { color: var(--primary); }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .transparency { padding: 32px 24px; }
+            .hero h1 { font-size: 2.6rem; }
+            .shortcut-banner { padding: 32px; }
+            .preview-wrapper { padding: 12px; }
         }
     </style>
 </head>
@@ -86,59 +179,161 @@
                 <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 ClipMaster
             </div>
-            <!-- UPDATE THIS LINK -->
-            <a href="https://chrome.google.com/webstore/detail/gopagdmpgfbgklmckanjgpdcdkemipkl" class="btn-primary" target="_blank">Add to Chrome</a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="privacy.html" class="nav-link">Privacy Policy</a>
+                <a href="https://github.com/gokuthug1/ClipMaster" class="nav-link" target="_blank">GitHub</a>
+                <a href="https://chromewebstore.google.com/detail/clipmaster/gopagdmpgfbgklmckanjgpdcdkemipkl" class="btn-primary" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                    Add to Chrome
+                </a>
+            </div>
         </nav>
 
         <!-- Hero -->
         <section class="hero">
             <div class="badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Version 8.0 Available Now
+                <span class="dot"></span>
+                Version 8.5 Released • Peak Remastered
             </div>
-            <h1>The ultimate <span>clipboard manager</span> for your browser.</h1>
-            <p>A beautifully remastered, floating clipboard window. Save, search, pin, and easily manage your copied text and images right from your active tab.</p>
-            <!-- UPDATE THIS LINK -->
-            <a href="https://chrome.google.com/webstore/detail/gopagdmpgfbgklmckanjgpdcdkemipkl" class="btn-primary" target="_blank" style="padding: 16px 36px; font-size: 1.1rem;">Download Free Extension</a>
+            <h1>The ultimate <span>floating clipboard</span> for modern browsers.</h1>
+            <p>Access your copied history anywhere. A draggable glassmorphism window with instant search, syntax highlighting for code snippets, and offline image conversion.</p>
+            
+            <div class="hero-ctas">
+                <a href="https://chromewebstore.google.com/detail/clipmaster/gopagdmpgfbgklmckanjgpdcdkemipkl" class="btn-primary" target="_blank" style="padding: 16px 36px; font-size: 1.1rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Add to Chrome — It's Free
+                </a>
+                <a href="https://github.com/gokuthug1/ClipMaster" class="btn-secondary" target="_blank" style="padding: 16px 28px; font-size: 1.1rem;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    Source Code
+                </a>
+            </div>
+
+            <!-- UI Mockup Preview -->
+            <div class="preview-wrapper">
+                <div class="mock-floater">
+                    <div class="mock-header">
+                        <div class="mock-brand">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                            ClipMaster Floater
+                        </div>
+                        <div class="mock-actions">
+                            <div class="mock-btn">+</div>
+                            <div class="mock-btn">⚙</div>
+                            <div class="mock-btn">_</div>
+                            <div class="mock-btn">✕</div>
+                        </div>
+                    </div>
+                    <div class="mock-search">
+                        <span>🔍 Search clipboard...</span>
+                    </div>
+                    <div class="mock-list">
+                        <div class="mock-item pinned">
+                            <div>
+                                <div class="mock-item-text">const format = (code) => Beautifier.format(code, 'javascript');</div>
+                                <div class="mock-meta">Pinned • Just now • 64 B</div>
+                            </div>
+                            <span class="mock-tag">JAVASCRIPT</span>
+                        </div>
+                        <div class="mock-item">
+                            <div>
+                                <div class="mock-item-text">data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%22...</div>
+                                <div class="mock-meta">Offline Image Data URL • 12KB</div>
+                            </div>
+                            <span class="mock-tag">SVG IMAGE</span>
+                        </div>
+                        <div class="mock-item">
+                            <div>
+                                <div class="mock-item-text">https://chromewebstore.google.com/detail/clipmaster</div>
+                                <div class="mock-meta">2m ago • 53 B</div>
+                            </div>
+                            <span class="mock-tag">URL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shortcut Banner -->
+        <section class="shortcut-banner">
+            <div>
+                <h3>Summon Instantly with Alt + C</h3>
+                <p>Press the hotkey anytime on any webpage to toggle the floating window without touching your mouse.</p>
+            </div>
+            <div class="shortcut-key-wrapper">
+                <span class="key-badge">Alt</span>
+                <span style="font-size: 1.5rem; color: #94a3b8;">+</span>
+                <span class="key-badge">C</span>
+            </div>
         </section>
 
         <!-- Features Grid -->
-        <section class="features">
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                </div>
-                <h3>Floating & Unintrusive</h3>
-                <p>Access your history anywhere on any tab. The UI is completely draggable, resizable, and can minimize to stay out of your way.</p>
+        <section id="features">
+            <div class="features-header">
+                <h2>Designed for Speed & Privacy</h2>
+                <p>Everything you need in a modern clipboard manager, zero bloat.</p>
             </div>
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <h3>Syntax Highlighting & Formatting</h3>
+                    <p>Detects JavaScript, HTML, CSS, and JSON automatically. View your copied snippets with colorful syntax highlighting, line numbers, and instant code beautification.</p>
                 </div>
-                <h3>Local Backup</h3>
-                <p>Keep your data safe and entirely offline. Easily export your entire clipboard history to a JSON file and import it back whenever you need.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    </div>
+                    <h3>Offline Data URL Conversion</h3>
+                    <p>Converts saved images into local SVG and Base64 Data URLs. Even if the hosting website removes or deletes the image, your copy remains preserved offline forever.</p>
                 </div>
-                <h3>Text & Images</h3>
-                <p>Save snippets or image URLs directly using the right-click menu. Pin your most important items to the top of your list forever.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <h3>Draggable Glassmorphism Floater</h3>
+                    <p>Access your history in an un-intrusive floating overlay. Seamlessly drag, resize, or minimize it to fit your exact screen workflow with boundary protection.</p>
                 </div>
-                <h3>Dark Mode Ready</h3>
-                <p>Switch between light and dark themes instantly. Customize the floater's dimensions right from the settings menu to fit your workflow.</p>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <h3>Real-Time Instant Search</h3>
+                    <p>Find any clip in milliseconds. Filter through up to 5,000 saved items by keyword, file size, or timestamp, and click once to copy it right back.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3>100% Private & Local Storage</h3>
+                    <p>Zero telemetry, zero trackers, and zero external servers. Everything is stored strictly inside your browser's local sandbox with unlimited storage capacity.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </div>
+                    <h3>JSON Backup & Restore</h3>
+                    <p>Easily export your entire history into clean JSON backup files. Import and merge backups across machines with automated deduplication.</p>
+                </div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2026 ClipMaster. All rights reserved.</p>
+            <p>&copy; 2026 ClipMaster. Built with privacy and speed in mind.</p>
             <div class="links">
+                <a href="https://chromewebstore.google.com/detail/clipmaster/gopagdmpgfbgklmckanjgpdcdkemipkl" target="_blank">Chrome Web Store</a>
                 <a href="privacy.html">Privacy Policy</a>
+                <a href="https://github.com/gokuthug1/ClipMaster" target="_blank">GitHub Repository</a>
+                <a href="https://cash.app/$gokuthug1" target="_blank">Donate ($gokuthug1)</a>
                 <a href="mailto:gokuthug833@gmail.com">Contact Support</a>
             </div>
         </footer>

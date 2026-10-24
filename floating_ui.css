@@ -1,0 +1,347 @@
+/* floating_ui.css - ClipMaster Injected UI Styles (v8.5 - Peak Edition) */
+
+#clipmaster-floater-ui {
+    /* Light Theme Tokens */
+    --cmf-bg: rgba(255, 255, 255, 0.82);
+    --cmf-border: rgba(0, 0, 0, 0.08);
+    --cmf-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0,0,0,0.04);
+    --cmf-text: #111827;
+    --cmf-text-muted: #6b7280;
+    --cmf-accent: #3b82f6;
+    --cmf-accent-hover: #2563eb;
+    --cmf-item-bg: rgba(255, 255, 255, 0.65);
+    --cmf-item-hover: rgba(255, 255, 255, 0.98);
+    --cmf-danger: #ef4444;
+    --cmf-danger-bg: rgba(239, 68, 68, 0.1);
+    --cmf-radius: 20px;
+    --cmf-radius-inner: 14px;
+    --cmf-blur: blur(24px);
+    --cmf-pin-color: #f59e0b;
+    --cmf-pin-bg: rgba(245, 158, 11, 0.12);
+    --cmf-success: #10b981;
+
+    all: initial;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: fixed;
+    top: 40px; left: 40px;
+    width: 380px;
+    max-height: 600px;
+    background-color: var(--cmf-bg);
+    backdrop-filter: var(--cmf-blur);
+    -webkit-backdrop-filter: var(--cmf-blur);
+    color: var(--cmf-text);
+    border: 1px solid var(--cmf-border);
+    border-radius: var(--cmf-radius);
+    box-shadow: var(--cmf-shadow);
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#clipmaster-floater-ui.cmf-dark-mode {
+    --cmf-bg: rgba(24, 24, 27, 0.72);
+    --cmf-border: rgba(255, 255, 255, 0.1);
+    --cmf-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0,0,0,0.25);
+    --cmf-text: #f9fafb;
+    --cmf-text-muted: #9ca3af;
+    --cmf-accent: #60a5fa;
+    --cmf-accent-hover: #93c5fd;
+    --cmf-item-bg: rgba(255, 255, 255, 0.05);
+    --cmf-item-hover: rgba(255, 255, 255, 0.12);
+    --cmf-danger: #f87171;
+    --cmf-danger-bg: rgba(248, 113, 113, 0.15);
+    --cmf-pin-color: #fbbf24;
+    --cmf-pin-bg: rgba(251, 191, 36, 0.15);
+    --cmf-success: #34d399;
+}
+
+#clipmaster-floater-ui *, 
+#clipmaster-floater-ui *::before, 
+#clipmaster-floater-ui *::after {
+    box-sizing: border-box;
+}
+
+/* Header */
+#clipmaster-floater-ui .cmf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--cmf-border);
+    cursor: move;
+    user-select: none;
+    position: relative; 
+    z-index: 2;
+}
+
+/* Minimize State */
+#clipmaster-floater-ui.cmf-minimized {
+    max-height: 58px !important;
+    min-height: 58px !important;
+}
+#clipmaster-floater-ui.cmf-minimized .cmf-toolbar,
+#clipmaster-floater-ui.cmf-minimized .cmf-quick-add-container,
+#clipmaster-floater-ui.cmf-minimized .cmf-list-container {
+    opacity: 0; 
+    pointer-events: none;
+    visibility: hidden;
+}
+#clipmaster-floater-ui.cmf-minimized .cmf-header {
+    border-bottom: none;
+}
+
+#clipmaster-floater-ui .cmf-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cmf-accent);
+}
+#clipmaster-floater-ui .cmf-brand svg { width: 22px; height: 22px; }
+#clipmaster-floater-ui .cmf-brand h1 {
+    font-size: 1.15em;
+    margin: 0;
+    font-weight: 600;
+    color: var(--cmf-text);
+    letter-spacing: -0.3px;
+}
+
+#clipmaster-floater-ui .cmf-header-buttons { display: flex; gap: 4px; }
+#clipmaster-floater-ui .cmf-header-buttons button {
+    background: transparent;
+    border: none;
+    color: var(--cmf-text-muted);
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+#clipmaster-floater-ui .cmf-header-buttons button svg { width: 18px; height: 18px; }
+#clipmaster-floater-ui .cmf-header-buttons button:hover {
+    background-color: var(--cmf-item-hover);
+    color: var(--cmf-text);
+}
+#clipmaster-floater-ui .cmf-header-buttons .cmf-close-btn:hover {
+    color: var(--cmf-danger);
+    background-color: var(--cmf-danger-bg);
+}
+
+/* Quick Add Snippet Bar */
+#clipmaster-floater-ui .cmf-quick-add-container {
+    padding: 8px 16px;
+    display: flex;
+    gap: 8px;
+    background: var(--cmf-item-bg);
+    border-bottom: 1px solid var(--cmf-border);
+}
+#clipmaster-floater-ui .cmf-quick-add-container input {
+    flex-grow: 1;
+    padding: 6px 12px;
+    border: 1px solid var(--cmf-border);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--cmf-text);
+    font-size: 0.9em;
+}
+#clipmaster-floater-ui .cmf-quick-add-container input:focus {
+    outline: none;
+    border-color: var(--cmf-accent);
+}
+
+/* Toolbar */
+#clipmaster-floater-ui .cmf-toolbar {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--cmf-border);
+    position: relative; 
+    z-index: 1;
+}
+
+#clipmaster-floater-ui .cmf-search-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+#clipmaster-floater-ui .cmf-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cmf-text-muted);
+    width: 16px; height: 16px;
+    display: flex;
+}
+#clipmaster-floater-ui .cmf-search-icon svg { width: 100%; height: 100%; }
+#clipmaster-floater-ui .cmf-search-bar {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid var(--cmf-border);
+    border-radius: 20px;
+    background-color: var(--cmf-item-bg);
+    color: var(--cmf-text);
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+#clipmaster-floater-ui .cmf-search-bar:focus {
+    outline: none;
+    border-color: var(--cmf-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cmf-accent) 20%, transparent);
+    background-color: transparent;
+}
+
+#clipmaster-floater-ui .cmf-controls { display: flex; gap: 6px; }
+#clipmaster-floater-ui .cmf-controls .cmf-text-btn {
+    background: var(--cmf-item-bg);
+    border: 1px solid var(--cmf-border);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--cmf-text);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#clipmaster-floater-ui .cmf-controls .cmf-text-btn.cmf-danger-btn {
+    color: var(--cmf-danger);
+    border-color: var(--cmf-danger-bg);
+    background: var(--cmf-danger-bg);
+}
+#clipmaster-floater-ui .cmf-controls .cmf-text-btn:hover {
+    background: var(--cmf-item-hover);
+}
+
+/* List Container */
+#clipmaster-floater-ui .cmf-list-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 12px;
+    transition: opacity 0.3s;
+}
+#clipmaster-floater-ui #cmf-clipboard-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+}
+#clipmaster-floater-ui #cmf-clipboard-list li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px;
+    background-color: var(--cmf-item-bg);
+    border: 1px solid var(--cmf-border);
+    border-radius: var(--cmf-radius-inner);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#clipmaster-floater-ui #cmf-clipboard-list li:hover {
+    background-color: var(--cmf-item-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+#clipmaster-floater-ui #cmf-clipboard-list li.cmf-pinned {
+    border-left: 4px solid var(--cmf-pin-color);
+    background-color: var(--cmf-pin-bg);
+}
+
+#clipmaster-floater-ui .cmf-item-content { flex-grow: 1; overflow: hidden; }
+#clipmaster-floater-ui .cmf-item-text-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+#clipmaster-floater-ui img.cmf-item-preview-img {
+    width: 44px; height: 44px;
+    border: 1px solid var(--cmf-border);
+    border-radius: 8px;
+    object-fit: cover; flex-shrink: 0;
+}
+#clipmaster-floater-ui span.cmf-item-text-main, 
+#clipmaster-floater-ui span.cmf-image-url-text {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 0.95em; font-weight: 500;
+}
+#clipmaster-floater-ui span.cmf-image-url-text { color: var(--cmf-text-muted); font-weight: 400; }
+#clipmaster-floater-ui .cmf-item-timestamp { font-size: 0.8em; color: var(--cmf-text-muted); }
+
+/* Item Action Buttons */
+#clipmaster-floater-ui .cmf-item-actions {
+    display: flex; align-items: center; flex-shrink: 0; gap: 4px;
+    opacity: 0; transform: translateX(8px); transition: all 0.2s;
+}
+#clipmaster-floater-ui #cmf-clipboard-list li:hover .cmf-item-actions {
+    opacity: 1; transform: translateX(0);
+}
+#clipmaster-floater-ui .cmf-item-actions button {
+    width: 32px; height: 32px; padding: 0;
+    border-radius: 50%; color: var(--cmf-text-muted);
+    background: transparent; border: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all 0.2s; cursor: pointer;
+}
+#clipmaster-floater-ui .cmf-item-actions button:hover {
+    background-color: var(--cmf-bg);
+    color: var(--cmf-text);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+#clipmaster-floater-ui .cmf-item-actions button svg { width: 17px; height: 17px; }
+#clipmaster-floater-ui .cmf-item-actions .cmf-pin-item.cmf-pinned-active { color: var(--cmf-pin-color); }
+#clipmaster-floater-ui .cmf-item-actions .cmf-delete-item:hover { color: var(--cmf-danger); background-color: var(--cmf-danger-bg); }
+#clipmaster-floater-ui .cmf-item-actions button.cmf-copied-active {
+    color: var(--cmf-success);
+    background-color: rgba(16, 185, 129, 0.15);
+}
+
+/* Empty State */
+#clipmaster-floater-ui .cmf-empty-state {
+    text-align: center; padding: 50px 20px;
+    color: var(--cmf-text-muted);
+    flex-grow: 1; display: none; flex-direction: column;
+    justify-content: center; align-items: center; gap: 12px;
+}
+#clipmaster-floater-ui .cmf-empty-state svg { width: 48px; height: 48px; stroke-width: 1px; opacity: 0.5; }
+#clipmaster-floater-ui .cmf-empty-state p { margin: 0; font-size: 1.05em; font-weight: 500; color: var(--cmf-text); }
+#clipmaster-floater-ui .cmf-empty-state span { font-size: 0.9em; }
+
+/* Scrollbar */
+#clipmaster-floater-ui .cmf-list-container::-webkit-scrollbar { width: 6px; }
+#clipmaster-floater-ui .cmf-list-container::-webkit-scrollbar-track { background: transparent; }
+#clipmaster-floater-ui .cmf-list-container::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.3);
+    border-radius: 10px;
+}
+#clipmaster-floater-ui .cmf-list-container::-webkit-scrollbar-thumb:hover { 
+    background-color: rgba(150, 150, 150, 0.6); 
+}
+
+/* Scoped Tooltips (NEVER leak to host page) */
+#clipmaster-floater-ui [data-tooltip] { position: relative; }
+#clipmaster-floater-ui [data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%; transform: translate(-50%, 4px) scale(0.95);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    bottom: calc(100% + 8px);
+    background-color: var(--cmf-text);
+    color: var(--cmf-bg);
+    padding: 5px 9px;
+    border-radius: 7px;
+    font-size: 0.78em; font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+#clipmaster-floater-ui [data-tooltip]:hover::before {
+    opacity: 1; visibility: visible;
+    transform: translate(-50%, 0) scale(1);
+    transition-delay: 0.2s;
+}
+#clipmaster-floater-ui .cmf-header [data-tooltip]::before, 
+#clipmaster-floater-ui .cmf-toolbar [data-tooltip]::before {
+    bottom: auto; top: calc(100% + 8px);
+    transform: translate(-50%, -4px) scale(0.95);
+}
+#clipmaster-floater-ui .cmf-header [data-tooltip]:hover::before, 
+#clipmaster-floater-ui .cmf-toolbar [data-tooltip]:hover::before {
+    transform: translate(-50%, 0) scale(1);
+}

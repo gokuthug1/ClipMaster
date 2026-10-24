@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipMaster Settings</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <header>
+            <div class="header-brand">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-icon"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                <h1>ClipMaster</h1>
+            </div>
+            <span id="extension-version" class="version-badge">v8.5.0</span>
+        </header>
+
+        <main>
+            <!-- Appearance Settings -->
+            <div class="setting-card">
+                <h2>Appearance & Floating Window</h2>
+                
+                <div class="form-group">
+                    <div class="label-wrapper">
+                        <label for="floaterWidth">Floater Width</label>
+                        <span id="widthValue" class="value-badge">380px</span>
+                    </div>
+                    <input type="range" id="floaterWidth" min="320" max="800" step="10">
+                    <p class="description">Adjust the default width of the floating clipboard window.</p>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="form-group">
+                    <div class="label-wrapper">
+                        <label for="floaterMaxHeight">Floater Max Height</label>
+                        <span id="heightValue" class="value-badge">600px</span>
+                    </div>
+                    <input type="range" id="floaterMaxHeight" min="320" max="1000" step="10">
+                    <p class="description">Adjust maximum height before the item list scrolls.</p>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Shortcut Info -->
+                <div class="shortcut-tip">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span>Quick Summon: Press <kbd>Alt</kbd> + <kbd>C</kbd> on any webpage to toggle the floating window instantly.</span>
+                </div>
+            </div>
+
+            <!-- Storage & Processing -->
+            <div class="setting-card">
+                <h2>Storage & Processing</h2>
+
+                <!-- Image Data URL Toggle -->
+                <div class="form-group row-toggle">
+                    <div class="label-wrapper-toggle">
+                        <label for="saveImagesAsDataUrl">Save Images as Offline Data URLs</label>
+                        <p class="description">Converts and saves images locally as Base64 / SVG Data URLs so they remain accessible even if the original online image is deleted.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="saveImagesAsDataUrl">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- System Notifications Toggle -->
+                <div class="form-group row-toggle">
+                    <div class="label-wrapper-toggle">
+                        <label for="enableNotifications">Show Save Notifications</label>
+                        <p class="description">Displays a brief notification in the corner of your screen when a snippet or image is saved.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="enableNotifications">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Toggle Switch for Donations -->
+                <div class="form-group row-toggle">
+                    <div class="label-wrapper-toggle">
+                        <label for="hideDonations">Hide Support / Donation Links</label>
+                        <p class="description">Removes donation heart buttons from the floater UI and settings page.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="hideDonations">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Data & Backup -->
+            <div class="setting-card">
+                <h2>Backup & Restore</h2>
+                <p id="storage-stats-text" class="storage-stats-text">Loading storage usage...</p>
+                <div class="data-actions-row">
+                    <button id="btn-export" class="secondary-btn">Export Local Backup (JSON)</button>
+                    <button id="btn-import" class="secondary-btn">Import Backup (JSON)</button>
+                    <input type="file" id="file-import" accept=".json" style="display: none;" />
+                </div>
+            </div>
+
+            <!-- Donation Section -->
+            <div class="setting-card donation-card" id="donation-card-container">
+                <h2>Support Development</h2>
+                <div class="donation-content">
+                    <p style="margin-bottom: 16px;">ClipMaster is free, private, and open-source. If you enjoy using it, please consider supporting continued development!</p>
+                    <a href="https://cash.app/$gokuthug1" target="_blank" class="cash-app-btn">Donate to $gokuthug1</a>
+                    <div class="qr-container" style="margin-top: 24px;">
+                        <p class="qr-label">Scan with Cash App</p>
+                        <img src="icons/QR.svg" alt="Cash App QR Code" class="qr-code">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <span id="status-message"></span>
+        </footer>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html>

@@ -28,7 +28,7 @@
 
         .bg-glow { position: absolute; top: -150px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 70%); z-index: -1; pointer-events: none; }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
 
         /* Navbar */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; margin-bottom: 20px; }
@@ -83,45 +83,48 @@
         <!-- Privacy Policy Content -->
         <main class="document-wrapper">
             <h1>Privacy Policy for ClipMaster</h1>
-            <span class="last-updated"><strong>Last Updated:</strong> February 28, 2026</span>
+            <span class="last-updated"><strong>Last Updated:</strong> October 24, 2026</span>
 
             <div class="section-header">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                <h2>1. Data Storage and Location</h2>
+                <h2>1. Local-First Data Storage</h2>
             </div>
-            <p>ClipMaster is designed with your privacy as its top priority.</p>
+            <p>ClipMaster operates entirely locally on your device with complete privacy:</p>
             <ul>
-                <li><strong>Local Storage:</strong> All data created and used by this extension, including your clipboard history, settings, and preferences, is stored entirely locally on your own computer using the <code>chrome.storage.local</code> API. </li>
+                <li><strong>Local Storage:</strong> All data, including your clipboard snippets, images, pins, and custom settings, is saved exclusively on your local computer via Chrome's secure <code>chrome.storage.local</code> API with <code>unlimitedStorage</code> support.</li>
+                <li><strong>Offline Preservation:</strong> Images saved as Data URLs are converted into local SVG or Base64 data and kept offline on your machine.</li>
             </ul>
 
             <div class="section-header">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-                <h2>2. Data Collection and Transmission</h2>
+                <h2>2. Zero Data Collection & Zero Telemetry</h2>
             </div>
-            <p>We do <strong>not</strong> collect, store, or transmit any of your personal data, clipboard history, or usage analytics to the developer or any third-party servers.</p>
+            <p>We do <strong>not</strong> collect, monitor, track, or transmit any of your personal data or clipboard contents.</p>
             <ul>
-                <li><strong>No Developer Access:</strong> The developer of ClipMaster has absolutely no access to your data.</li>
-                <li><strong>No Analytics:</strong> The extension does not contain any tracking functionality or analytics scripts.</li>
-                <li><strong>Transmission:</strong> No data ever leaves your device unless you manually choose to export it to a file.</li>
+                <li><strong>No Remote Servers:</strong> ClipMaster does not operate any analytics servers, tracking databases, or external telemetry endpoints.</li>
+                <li><strong>No Third Parties:</strong> Your copied items are never shared, sold, or accessible to third parties or the developer.</li>
+                <li><strong>Complete Ownership:</strong> You retain full ownership and control over your clipboard history. Data can be exported to or imported from local JSON backup files at any time.</li>
             </ul>
 
             <div class="section-header">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                <h2>3. Permissions</h2>
+                <h2>3. Chrome Permissions Disclosure</h2>
             </div>
-            <p>ClipMaster requests a minimal set of permissions required for its core functionality:</p>
+            <p>ClipMaster requests minimal permissions required strictly for core offline features:</p>
             <ul>
-                <li><code>storage</code>: To save settings and your clipboard data locally.</li>
-                <li><code>clipboardRead</code>: To detect and save copied text/images when initiated by the user.</li>
-                <li><code>offscreen</code> / <code>scripting</code>: To manage the clipboard API and inject the floating UI seamlessly in the background.</li>
+                <li><code>storage</code> & <code>unlimitedStorage</code>: Saves clipboard history, pins, and preferences locally without quota restrictions.</li>
+                <li><code>clipboardRead</code>: Enables the user to read and save clipboard data on demand.</li>
+                <li><code>notifications</code>: Displays an optional brief desktop notification when an item or image is saved.</li>
+                <li><code>offscreen</code>: Safely manages background clipboard read/write fallbacks in compliance with Manifest V3 service workers.</li>
+                <li><code>contextMenus</code>: Provides convenient right-click options ("Add selection to ClipMaster", "Add image to ClipMaster", "Open ClipMaster").</li>
+                <li><code>scripting</code> & <code>activeTab</code>: Injects the floating clipboard UI into the current active web tab when toggled by the user.</li>
             </ul>
-            <p>These permissions are used solely for the purposes described in the Chrome Web Store listing and are never used to track you.</p>
 
             <div class="section-header">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                <h2>4. Contact</h2>
+                <h2>4. Contact & Support</h2>
             </div>
-            <p>If you have any questions about this privacy policy, please open an issue on our GitHub repository or contact us at <a href="mailto:gokuthug833@gmail.com">gokuthug833@gmail.com</a>.</p>
+            <p>If you have any questions or concerns regarding your privacy, please submit an issue on our GitHub repository or contact the developer directly at <a href="mailto:gokuthug833@gmail.com">gokuthug833@gmail.com</a>.</p>
         </main>
 
         <!-- Footer -->

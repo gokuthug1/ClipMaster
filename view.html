@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipMaster Viewer</title>
+    <link rel="stylesheet" href="view.css">
+</head>
+<body>
+    <div id="viewer-container">
+        <div class="header">
+            <div class="title-wrap">
+                <h1 id="item-title">Loading...</h1>
+                <span id="badge-code-lang" class="badge-lang" style="display: none;"></span>
+            </div>
+            <div id="view-controls">
+                <button id="format-btn" class="view-control-btn secondary" style="display: none;">Format Code</button>
+                <button id="copy-btn" class="view-control-btn">Copy</button>
+                <button id="delete-btn" class="view-control-btn danger">Delete</button>
+            </div>
+        </div>
+        
+        <div id="item-content" class="content-loading">
+            <!-- Dynamically populated -->
+        </div>
+
+        <div class="footer-meta">
+            <p id="item-meta"></p>
+        </div>
+    </div>
+
+    <!-- Syntax Highlighter & Beautifier Libraries -->
+    <script src="highlighter.js"></script>
+    <script src="beautifier.js"></script>
+    <script src="view.js"></script>
+</body>
+</html>
